@@ -5,8 +5,8 @@ DESC="phpserve"
 PIDFILE="/var/run/${NAME}.pid"
 LOGFILE="/var/log/${NAME}.log"
 
-DAEMON="/var/www/html/serve.sh"
-DAEMON_OPTS=""
+DAEMON="/bin/sh"
+DAEMON_OPTS="/var/www/html/serve.sh"
 
 START_OPTS="--start --background --make-pidfile --pidfile ${PIDFILE} --exec ${DAEMON} ${DAEMON_OPTS}"
 STOP_OPTS="--stop --pidfile ${PIDFILE}"

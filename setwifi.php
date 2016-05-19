@@ -11,10 +11,12 @@ $wifi=shell_exec('iwgetid -r');
 if(!empty($wifi)){
     shell_exec('update-rc.d hostapd disable');
     shell_exec('update-rc.d dnsmasq disable');
+    shell_exec('update-rc.d phpserve disable');
     shell_exec('service hostapd stop');
     shell_exec('service dnsmasq stop');
-    // shell_exec("rm /etc/cron.d/serve");
-    return ['status'=>'<h4 class="bg-success">Connected to <strong>'.$_POST['essid'].'</strong>.<br>Please reboot.</h4>'];
+    shell_exec('service phpserve stop');
+    shell_exec("rm /etc/init.d/phpserve");
+    echo '<h4 class="bg-success">Connected to <strong>'.$_POST['essid'].'</strong>.<br>Please reboot.</h4>';
 }else{
     shell_exec('echo "auto lo" >/etc/network/interfaces');
     shell_exec('echo "iface lo inet loopback" >>/etc/network/interfaces');
@@ -24,6 +26,7 @@ if(!empty($wifi)){
     shell_exec('echo "address 10.0.0.1" >>/etc/network/interfaces');
     shell_exec('echo "netmask 255.255.255.0" >>/etc/network/interfaces');
     shell_exec('echo "broadcast 255.0.0.0" >>/etc/network/interfaces');
-    return ['status'=>'<h4 class="bg-danger">Could not connect to <strong>'.$_POST['essid'].'</strong>.<br>Please try again</h4>'];
+    shell_exec('service networking restart');
+    echo '<h4 class="bg-danger">Could not connect to <strong>'.$_POST['essid'].'</strong>.<br>Please try again</h4>';
 }
  ?>

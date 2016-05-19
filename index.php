@@ -41,7 +41,7 @@ $essid=array_filter(explode(PHP_EOL, $essid));
                             <form id="frm1" class="form" method="post" action="#">
                                 <div class="form-group">
                                     <select class="form-control" name="essid" required>
-                                        <option value=''>Select WIFI</option>
+                                        <option value='w'>Select WIFI</option>
                                         <?php foreach($essid as  $value):?>
                                             <option value="<?php echo trim($value); ?>"><?php echo trim($value); ?></option>
                                         <?php  endforeach; ?>

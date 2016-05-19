@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
+dpkg --clear-avail
 apt-get update
-apt-get -y install  php5-cli hostapd dnsmasq git
+apt-get -y install php5-common php5-cgi php5 php5-cli hostapd dnsmasq git
 
 service hostapd stop
 service dnsmasq stop
-
 
 rm -rf /var/www/html
 git clone https://github.com/cheech454/wIceSet.git /var/www/html
@@ -45,12 +45,12 @@ cp /var/www/html/phpserve /etc/init.d/phpserve
 
 sudo update-rc.d hostapd defaults
 sudo update-rc.d dnsmasq defaults
-sudo update-rc.d artisanserve defaults
+sudo update-rc.d phpserve defaults
 
 
 service hostapd start
 service dnsmasq start
-
+service phpserve start
 
 echo '*************'
 echo 'Please Reboot'
