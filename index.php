@@ -81,7 +81,9 @@ $essid=array_filter(explode(PHP_EOL, $essid));
                     success: function(data){
                         $('#dError').html(data['status']);
                     },
-
+                    error: function(data){
+                        $('#dError').html(data['status']);
+                    },
                 })
             })
         </script>

@@ -1,1 +1,2 @@
-php /var/www/html/artisan serve --host=10.0.0.1 --port=80
+cd /var/www/html
+php -S 10.0.0.1:80 
