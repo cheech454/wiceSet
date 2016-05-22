@@ -19,6 +19,7 @@ $essid=array_filter(explode(PHP_EOL, $essid));
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
         <style>
             body {
                 padding-top: 50px;
@@ -38,7 +39,7 @@ $essid=array_filter(explode(PHP_EOL, $essid));
                             <h3 class="panel-title">Wifi Setup</h3>
                         </div>
                         <div class="panel-body text-center">
-                            <form id="frm1" class="form" method="post" action="#">
+                            <form id="frm1" class="form" method="post" action="setwifi.php">
                                 <div class="form-group">
                                     <select class="form-control" name="essid" required>
                                         <option value='w'>Select WIFI</option>
@@ -59,33 +60,46 @@ $essid=array_filter(explode(PHP_EOL, $essid));
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-3 col-sm-offset-4"  id="dError">
-
+                <div class="col-sm-3 col-sm-offset-4"  id="dMessage" >
+                    <p class="bg-info">
+                        <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                        Connecting to network.<br>
+                        This may take a couple of minutes.<br>
+                        Please be patient.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-4"  id="dStatus" >
                 </div>
             </div>
         </div>
 
         <script src="js/jquery.min.js"></script>
-
         <script src="js/bootstrap.min.js"></script>
 
-
         <script>
-            $('#frm1').on('submit',function(e){
-                e.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    url: 'setwifi.php',
-                    data: $("#frm1").serialize(),
-                    dataType: 'json',
-                    success: function(data){
-                        $('#dError').html(data['status']);
-                    },
-                    error: function(data){
-                        $('#dError').html(data['status']);
-                    },
-                })
-            })
+        $(document).ready(function() {
+            var status;
+            $('#dMessage').hide();
+            if (qs('status') == 'failed') {
+                status='<p class="bg-warning lead">Failed to connect!<br>Please try again.</p>';
+            }else if (qs('status') == 'success') {
+                status='<p class="bg-success lead">Connected to wifi!<br><a href="reboot.php" class="btn btn-warning">Click here to  reboot the toaster.</a></p>';
+            }
+            $('#dStatus').html(status);
+            $('#dStatus').show();
+            $('#frm1').submit(function() {
+                $('#dMessage').show();
+                $('#dStatus').hide();
+            });
+        });
+        function qs(key) {
+            key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx control chars
+            var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+            return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+        }
         </script>
     </body>
 </html>

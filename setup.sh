@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-dpkg --clear-avail
 apt-get update
 apt-get -y install php5-common php5-cgi php5 php5-cli hostapd dnsmasq git
 

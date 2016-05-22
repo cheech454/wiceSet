@@ -1,2 +1,2 @@
 cd /var/www/html
-php -S 10.0.0.1:80 
+php -S 0.0.0.0:80
